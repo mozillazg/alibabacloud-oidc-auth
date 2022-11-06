@@ -1,0 +1,67 @@
+name: 'Authenticate to Alibaba Cloud'
+author: 'mozillazg'
+description: |-
+  Authenticate to Alibaba Cloud with GitHub Actions OIDC tokens.
+inputs:
+  audience:
+    description: |-
+      The value for the audience (aud) parameter in GitHub's generated OIDC
+      token.
+    default: 'sts.aliyuncs.com'
+    required: false
+  region:
+    description: |-
+      Alibaba Cloud Region
+    default: 'us-west-1'
+    required: false
+  role-arn-to-assume:
+    description: |-
+      Use the OIDC token to assume an RAM role.
+    required: true
+  oidc-provider-arn:
+    description: |-
+      The arn of OIDC provider.
+    required: true
+  role-duration-seconds:
+    description: |-
+      Role duration in seconds.
+    default: '3600'
+    required: false
+  role-session-name:
+    description: |-
+      Role session name
+    default: 'github-action'
+    required: false
+  export_environment_variables:
+    description: |-
+      If true, the action will export common environment variables which are
+      known to be consumed by popular downstream libraries and tools, including:
+      - ALIBABA_CLOUD_ACCESS_KEY_ID
+      - ALIBABA_CLOUD_ACCESS_KEY_SECRET
+      - ALIBABA_CLOUD_SECURITY_TOKEN
+      - ALICLOUD_ACCESS_KEY
+      - ALICLOUD_SECRET_KEY
+      - ALICLOUD_ACCESS_KEY_STS_TOKEN
+      - ALIBABACLOUD_ACCESS_KEY_ID
+      - ALIBABACLOUD_ACCESS_KEY_SECRET
+      - ALIBABACLOUD_SECURITY_TOKEN
+      If false, the action will not export any environment variables.
+    default: 'true'
+    required: false
+
+  retries:
+    description: |-
+      Number of times to retry a failed authentication attempt.
+    default: '3'
+    required: false
+
+outputs: {}
+
+branding:
+  icon: 'lock'
+  color: 'blue'
+
+runs:
+  using: 'node16'
+  main: 'index.js'
+  post: 'post.js'

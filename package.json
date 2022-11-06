@@ -1,0 +1,35 @@
+{
+  "name": "alibabacloud-oidc-auth",
+  "version": "0.1.0",
+  "description": "GitHub Action for authenticating to Alibaba Cloud with GitHub Actions OIDC tokens.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozillazg/alibabacloud-oidc-auth.git"
+  },
+  "keywords": [
+    "actions",
+    "alibaba cloud",
+    "credential",
+    "auth",
+    "oidc"
+  ],
+  "author": "mozillazg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mozillazg/alibabacloud-oidc-auth/issues"
+  },
+  "homepage": "https://github.com/mozillazg/alibabacloud-oidc-auth#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@alicloud/credentials": "^2.2.5",
+    "@alicloud/sts20150401": "^1.1.2",
+    "@alicloud/openapi-client": "^0.4.3",
+    "@alicloud/tea-util": "^1.4.4"
+  },
+  "devDependencies": {
+  }
+}
