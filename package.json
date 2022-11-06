@@ -4,7 +4,8 @@
   "description": "GitHub Action for authenticating to Alibaba Cloud with GitHub Actions OIDC tokens.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.js --license LICENSE -o dist && ncc build post.js --license LICENSE -o dist/post"
   },
   "repository": {
     "type": "git",
