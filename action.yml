@@ -62,5 +62,5 @@ branding:
 
 runs:
   using: 'node16'
-  main: 'dist/index.ts'
-  post: 'dist/post/index.ts'
+  main: 'dist/index.js'
+  post: 'dist/post/index.js'
