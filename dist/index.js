@@ -15854,15 +15854,15 @@ async function assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, 
 }
 
 async function main() {
-    const audience = core.getInput('audience');
+    const audience = core.getInput('audience', { required: false });
     const oidcToken = core.getIDToken(audience);
-    const region = core.getInput('region');
-    const roleArn = core.getInput('role-arn-to-assume');
-    const oidcArn = core.getInput('oidc-provider-arn');
-    const durationSeconds = Number(core.getInput('role-duration-seconds'));
-    const sessionName = core.getInput('role-session-name');
-    const exportEnvs = core.getBooleanInput('export_environment_variables');
-    const retries = Number(core.getInput('retries'));
+    const region = core.getInput('region', { required: false });
+    const roleArn = core.getInput('role-arn-to-assume', { required: true });
+    const oidcArn = core.getInput('oidc-provider-arn', { required: true });
+    const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
+    const sessionName = core.getInput('role-session-name', { required: false });
+    const exportEnvs = core.getBooleanInput('export_environment_variables', { required: false });
+    const retries = Number(core.getInput('retries', { required: false }));
 
     const cred = await assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName, retries);
 

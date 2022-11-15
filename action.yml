@@ -1,5 +1,4 @@
 name: 'Authenticate to Alibaba Cloud'
-author: 'mozillazg'
 description: |-
   Authenticate to Alibaba Cloud with GitHub Actions OIDC tokens.
 inputs:
@@ -7,7 +6,7 @@ inputs:
     description: |-
       The value for the audience (aud) parameter in GitHub's generated OIDC
       token.
-    default: 'sts.aliyuncs.com'
+    default: 'actions.github.com'
     required: false
   region:
     description: |-
