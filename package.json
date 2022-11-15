@@ -2,10 +2,10 @@
   "name": "alibabacloud-oidc-auth",
   "version": "0.1.0",
   "description": "GitHub Action for authenticating to Alibaba Cloud with GitHub Actions OIDC tokens.",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "ncc build index.js --license LICENSE -o dist && ncc build post.js --license LICENSE -o dist/post"
+    "build": "ncc build src/index.ts --source-map --license LICENSE -o dist && ncc build src/post.ts --source-map --license LICENSE -o dist/post"
   },
   "repository": {
     "type": "git",
@@ -27,10 +27,9 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@alicloud/credentials": "^2.2.5",
-    "@alicloud/sts20150401": "^1.1.2",
     "@alicloud/openapi-client": "^0.4.3",
-    "@alicloud/tea-util": "^1.4.4"
-  },
-  "devDependencies": {
+    "@alicloud/sts20150401": "^1.1.2",
+    "@alicloud/tea-util": "^1.4.4",
+    "typescript": "^4.8.4"
   }
 }

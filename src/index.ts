@@ -1,12 +1,16 @@
-const core = require('@actions/core');
-const sts = require('@alicloud/sts20150401');
-const openapi = require('@alicloud/openapi-client');
-const creds = require('@alicloud/credentials');
-const teaUtil = require('@alicloud/tea-util');
-const utils = require("./utils");
+'use strict';
 
-async function assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName, retries) {
-    const cred = new creds.Credential(new creds.Config({
+import * as core from '@actions/core';
+import Client, { AssumeRoleWithOIDCRequest } from '@alicloud/sts20150401';
+import * as openapi from '@alicloud/openapi-client';
+import Credential, { Config } from '@alicloud/credentials';
+import * as teaUtil from  '@alicloud/tea-util';
+import * as utils from  "./utils";
+
+async function assumeRole(region: string, roleArn: string, oidcArn: string,
+                          oidcToken: string, durationSeconds: Number, sessionName: string,
+                          retries: Number) {
+    const cred = new Credential(new Config({
         type: 'access_key',
         accessKeyId: 'xxx',
         accessKeySecret: 'xxx',
@@ -16,8 +20,8 @@ async function assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, 
         regionId: region,
         protocol: 'https',
     })
-    const client = new sts.Client(conf)
-    const req = new sts.AssumeRoleWithOIDCRequest({
+    const client = new Client(conf)
+    const req = new AssumeRoleWithOIDCRequest({
         durationSeconds: durationSeconds,
         OIDCProviderArn: oidcArn,
         OIDCToken: oidcToken,
@@ -31,8 +35,11 @@ async function assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, 
 
     return client.assumeRoleWithOIDCWithOptions(req, opts).then(function (data) {
         return {
+            // @ts-ignore
             accessKeyId: data.body.credentials.accessKeyId,
+            // @ts-ignore
             accessKeySecret: data.body.credentials.accessKeySecret,
+            // @ts-ignore
             securityToken: data.body.credentials.securityToken,
         }
     })
@@ -40,7 +47,7 @@ async function assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, 
 
 async function main() {
     const audience = core.getInput('audience', { required: false });
-    const oidcToken = core.getIDToken(audience);
+    const oidcToken = await core.getIDToken(audience);
     const region = core.getInput('region', { required: false });
     const roleArn = core.getInput('role-arn-to-assume', { required: true });
     const oidcArn = core.getInput('oidc-provider-arn', { required: true });
@@ -49,10 +56,12 @@ async function main() {
     const exportEnvs = core.getBooleanInput('export_environment_variables', { required: false });
     const retries = Number(core.getInput('retries', { required: false }));
 
-    const cred = await assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName, retries);
+    const { accessKeyId, accessKeySecret, securityToken } = await assumeRole(
+        region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName, retries);
 
     if (exportEnvs) {
-        utils.exportEnvs(cred.accessKeyId, cred.accessKeySecret, cred.securityToken);
+        // @ts-ignore
+        utils.exportEnvs(accessKeyId, accessKeySecret, securityToken);
     }
 }
 

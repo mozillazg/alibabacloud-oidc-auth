@@ -1,6 +1,11 @@
-const core = require("@actions/core");
+'use strict';
 
-export function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
+import * as core from "@actions/core";
+import {setSecret} from "@actions/core";
+
+export function exportEnvs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
+    core.setSecret(accessKeySecret)
+    core.setSecret(securityToken)
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_ID', accessKeyId);

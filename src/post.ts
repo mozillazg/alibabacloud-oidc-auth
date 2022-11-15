@@ -1,4 +1,6 @@
-const utils = require("./utils");
+'use strict';
+
+import * as utils from './utils';
 
 
 function main() {
