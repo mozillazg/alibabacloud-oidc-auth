@@ -31,7 +31,7 @@ inputs:
       Role session name
     default: 'github-action'
     required: false
-  export_environment_variables:
+  export-environment-variables:
     description: |-
       If true, the action will export common environment variables which are
       known to be consumed by popular downstream libraries and tools, including:

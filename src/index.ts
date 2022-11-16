@@ -53,7 +53,7 @@ async function main() {
     const oidcArn = core.getInput('oidc-provider-arn', { required: true });
     const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
     const sessionName = core.getInput('role-session-name', { required: false });
-    const exportEnvs = core.getBooleanInput('export_environment_variables', { required: false });
+    const exportEnvs = core.getBooleanInput('export-environment-variables', { required: false });
 
     const { accessKeyId, accessKeySecret, securityToken } = await assumeRole(
         region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);

@@ -2772,8 +2772,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exportEnvs = void 0;
 const core = __importStar(__nccwpck_require__(186));
 function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
-    core.setSecret(accessKeySecret);
-    core.setSecret(securityToken);
+    if (accessKeySecret !== "") {
+        core.setSecret(accessKeySecret);
+    }
+    if (securityToken !== "") {
+        core.setSecret(securityToken);
+    }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_ID', accessKeyId);

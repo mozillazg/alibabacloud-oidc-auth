@@ -15656,7 +15656,7 @@ function main() {
         const oidcArn = core.getInput('oidc-provider-arn', { required: true });
         const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
         const sessionName = core.getInput('role-session-name', { required: false });
-        const exportEnvs = core.getBooleanInput('export_environment_variables', { required: false });
+        const exportEnvs = core.getBooleanInput('export-environment-variables', { required: false });
         const { accessKeyId, accessKeySecret, securityToken } = yield assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);
         if (exportEnvs) {
             // @ts-ignore
@@ -15710,8 +15710,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exportEnvs = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
-    core.setSecret(accessKeySecret);
-    core.setSecret(securityToken);
+    if (accessKeySecret !== "") {
+        core.setSecret(accessKeySecret);
+    }
+    if (securityToken !== "") {
+        core.setSecret(securityToken);
+    }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_ID', accessKeyId);
