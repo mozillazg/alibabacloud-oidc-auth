@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  credentials:
+  self-test:
     runs-on: ubuntu-latest
     name: credentials
     permissions:
@@ -13,14 +13,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: test oidc
+      - name: get credentials
         uses: ./ # Uses an action in the root directory
         with:
           role-arn-to-assume: '${{ secrets.ROLE_ARN }}'
           oidc-provider-arn: '${{ secrets.OIDC_ARN }}'
 
-      - name: test using credentials
+      - name: test aliyun cli
         run: |
-          wget https://github.com/aliyun/aliyun-cli/releases/download/v3.0.133/aliyun-cli-linux-3.0.133-amd64.tgz
+          set -e
+          wget https://github.com/aliyun/aliyun-cli/releases/download/v3.0.133/aliyun-cli-linux-3.0.133-amd64.tgz > /dev/null
           tar zxvf aliyun-cli-linux-3.0.133-amd64.tgz
-          ./aliyun-cli sts GetCallerIdentity | jq .IdentityType
+          chmod +x ./aliyun
+          ./aliyun sts GetCallerIdentity | jq .IdentityType
