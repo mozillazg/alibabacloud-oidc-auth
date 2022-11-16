@@ -14,16 +14,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: get credentials
+        id: get-credentials
         uses: ./ # Uses an action in the root directory
         with:
           role-arn-to-assume: '${{ secrets.ROLE_ARN }}'
           oidc-provider-arn: '${{ secrets.OIDC_ARN }}'
 
-      - name: test aliyun cli
+      - name: test aliyun cli (using env)
+        env:
+          ALIBABACLOUD_REGION_ID: ap-southeast-1
         run: |
           set -e
           wget https://github.com/aliyun/aliyun-cli/releases/download/v3.0.133/aliyun-cli-linux-3.0.133-amd64.tgz --no-verbose
           tar zxvf aliyun-cli-linux-3.0.133-amd64.tgz
           chmod +x ./aliyun
-          export ALIBABACLOUD_REGION_ID=ap-southeast-1
           ./aliyun sts GetCallerIdentity | jq .IdentityType
+
+      - name: test oss cli (using outputs)
+        run: |
+          set -e
+          wget https://gosspublic.alicdn.com/ossutil/1.7.14/ossutil64 --no-verbose
+          chmod +x ossutil64
+          ./ossutil64 --access-key-id ${{ steps.get-credentials.outputs.access-key-id }} \
+            --access-key-secret ${{ steps.get-credentials.outputs.access-key-secret }} \
+            --sts-token ${{ steps.get-credentials.outputs.security-token }} --mode StsToken \
+            --endpoint oss-ap-southeast-1.aliyuncs.com \
+            stat oss://${{ secrets.OSS_BUCKET }} | grep ACL
