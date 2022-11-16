@@ -11,7 +11,7 @@ inputs:
   region:
     description: |-
       Alibaba Cloud Region
-    default: 'us-west-1'
+    default: 'ap-southeast-1'
     required: false
   role-arn-to-assume:
     description: |-

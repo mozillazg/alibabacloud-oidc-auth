@@ -5,11 +5,11 @@ import Client, { AssumeRoleWithOIDCRequest } from '@alicloud/sts20150401';
 import * as openapi from '@alicloud/openapi-client';
 import Credential, { Config } from '@alicloud/credentials';
 import * as teaUtil from  '@alicloud/tea-util';
+import { withRetries } from '@google-github-actions/actions-utils';
 import * as utils from  "./utils";
 
 async function assumeRole(region: string, roleArn: string, oidcArn: string,
-                          oidcToken: string, durationSeconds: Number, sessionName: string,
-                          retries: Number) {
+                          oidcToken: string, durationSeconds: Number, sessionName: string) {
     const cred = new Credential(new Config({
         type: 'access_key',
         accessKeyId: 'xxx',
@@ -29,10 +29,8 @@ async function assumeRole(region: string, roleArn: string, oidcArn: string,
         roleSessionName: sessionName,
     })
     const opts = new teaUtil.RuntimeOptions({
-        autoretry: true,
-        maxAttempts: retries,
-        backoffPolicy: 'fixed',
-        backoffPeriod: 2000,
+        connectTimeout: 5000,
+        readTimeout: 5000,
     });
 
     return client.assumeRoleWithOIDCWithOptions(req, opts).then(function (data) {
@@ -56,10 +54,9 @@ async function main() {
     const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
     const sessionName = core.getInput('role-session-name', { required: false });
     const exportEnvs = core.getBooleanInput('export_environment_variables', { required: false });
-    const retries = Number(core.getInput('retries', { required: false }));
 
     const { accessKeyId, accessKeySecret, securityToken } = await assumeRole(
-        region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName, retries);
+        region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);
 
     if (exportEnvs) {
         // @ts-ignore
@@ -68,7 +65,11 @@ async function main() {
 }
 
 async function run() {
-    await main();
+    const retries = Number(core.getInput('retries', { required: false }));
+    await withRetries(main, {
+        retries: retries,
+        backoff: 300,
+    })();
 }
 
 run();
