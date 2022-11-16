@@ -1,13 +1,15 @@
 'use strict';
 
 import * as core from "@actions/core";
-import {setSecret} from "@actions/core";
 
 export function exportEnvs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
-    if (accessKeySecret !== "") {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId)
+    }
+    if (accessKeySecret) {
         core.setSecret(accessKeySecret)
     }
-    if (securityToken !== "") {
+    if (securityToken) {
         core.setSecret(securityToken)
     }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
@@ -20,4 +22,19 @@ export function exportEnvs(accessKeyId: string, accessKeySecret: string, securit
     core.exportVariable('ALIBABA_CLOUD_SECURITY_TOKEN', securityToken);
     core.exportVariable('ALICLOUD_ACCESS_KEY_STS_TOKEN', securityToken);
     core.exportVariable('ALIBABACLOUD_SECURITY_TOKEN', securityToken);
+}
+
+export function setOutputs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId)
+    }
+    if (accessKeySecret) {
+        core.setSecret(accessKeySecret)
+    }
+    if (securityToken) {
+        core.setSecret(securityToken)
+    }
+    core.setOutput('access-key-id', accessKeyId);
+    core.setOutput('access-key-secret', accessKeySecret);
+    core.setOutput('security-token', securityToken);
 }

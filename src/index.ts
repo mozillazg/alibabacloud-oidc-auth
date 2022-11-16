@@ -7,6 +7,7 @@ import Credential, { Config } from '@alicloud/credentials';
 import * as teaUtil from  '@alicloud/tea-util';
 import { withRetries } from '@google-github-actions/actions-utils';
 import * as utils from  "./utils";
+import {setOutputs} from "./utils";
 
 async function assumeRole(region: string, roleArn: string, oidcArn: string,
                           oidcToken: string, durationSeconds: Number, sessionName: string) {
@@ -54,6 +55,7 @@ async function main() {
     const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
     const sessionName = core.getInput('role-session-name', { required: false });
     const exportEnvs = core.getBooleanInput('export-environment-variables', { required: false });
+    const setOutputs = core.getBooleanInput('set-outputs', { required: false });
 
     const { accessKeyId, accessKeySecret, securityToken } = await assumeRole(
         region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);
@@ -61,6 +63,10 @@ async function main() {
     if (exportEnvs) {
         // @ts-ignore
         utils.exportEnvs(accessKeyId, accessKeySecret, securityToken);
+    }
+    if (setOutputs) {
+        // @ts-ignore
+        utils.setOutputs(accessKeyId, accessKeySecret, securityToken);
     }
 }
 

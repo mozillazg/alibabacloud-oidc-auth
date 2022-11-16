@@ -15657,10 +15657,15 @@ function main() {
         const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
         const sessionName = core.getInput('role-session-name', { required: false });
         const exportEnvs = core.getBooleanInput('export-environment-variables', { required: false });
+        const setOutputs = core.getBooleanInput('set-outputs', { required: false });
         const { accessKeyId, accessKeySecret, securityToken } = yield assumeRole(region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);
         if (exportEnvs) {
             // @ts-ignore
             utils.exportEnvs(accessKeyId, accessKeySecret, securityToken);
+        }
+        if (setOutputs) {
+            // @ts-ignore
+            utils.setOutputs(accessKeyId, accessKeySecret, securityToken);
         }
     });
 }
@@ -15707,13 +15712,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exportEnvs = void 0;
+exports.setOutputs = exports.exportEnvs = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
-    if (accessKeySecret !== "") {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId);
+    }
+    if (accessKeySecret) {
         core.setSecret(accessKeySecret);
     }
-    if (securityToken !== "") {
+    if (securityToken) {
         core.setSecret(securityToken);
     }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
@@ -15728,6 +15736,21 @@ function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
     core.exportVariable('ALIBABACLOUD_SECURITY_TOKEN', securityToken);
 }
 exports.exportEnvs = exportEnvs;
+function setOutputs(accessKeyId, accessKeySecret, securityToken) {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId);
+    }
+    if (accessKeySecret) {
+        core.setSecret(accessKeySecret);
+    }
+    if (securityToken) {
+        core.setSecret(securityToken);
+    }
+    core.setOutput('access-key-id', accessKeyId);
+    core.setOutput('access-key-secret', accessKeySecret);
+    core.setOutput('security-token', securityToken);
+}
+exports.setOutputs = setOutputs;
 
 
 /***/ }),

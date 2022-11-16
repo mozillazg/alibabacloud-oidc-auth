@@ -48,13 +48,30 @@ inputs:
     default: 'true'
     required: false
 
+  set-outputs:
+    description: |-
+      If true, the action will setting credentials as action outputs, including:
+      - access-key-id
+      - access-key-secret
+      - security-token
+    default: 'true'
+    required: false
+
   retries:
     description: |-
       Number of times to retry a failed authentication attempt.
     default: '3'
     required: false
 
-outputs: {}
+outputs:
+  access-key-id:
+    description: access key id
+
+  access-key-secret:
+    description: access key secret
+
+  security-token:
+    description: security token
 
 branding:
   icon: 'lock'

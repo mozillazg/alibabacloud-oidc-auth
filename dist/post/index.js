@@ -2769,13 +2769,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exportEnvs = void 0;
+exports.setOutputs = exports.exportEnvs = void 0;
 const core = __importStar(__nccwpck_require__(186));
 function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
-    if (accessKeySecret !== "") {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId);
+    }
+    if (accessKeySecret) {
         core.setSecret(accessKeySecret);
     }
-    if (securityToken !== "") {
+    if (securityToken) {
         core.setSecret(securityToken);
     }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
@@ -2790,6 +2793,21 @@ function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
     core.exportVariable('ALIBABACLOUD_SECURITY_TOKEN', securityToken);
 }
 exports.exportEnvs = exportEnvs;
+function setOutputs(accessKeyId, accessKeySecret, securityToken) {
+    if (accessKeyId) {
+        core.setSecret(accessKeyId);
+    }
+    if (accessKeySecret) {
+        core.setSecret(accessKeySecret);
+    }
+    if (securityToken) {
+        core.setSecret(securityToken);
+    }
+    core.setOutput('access-key-id', accessKeyId);
+    core.setOutput('access-key-secret', accessKeySecret);
+    core.setOutput('security-token', securityToken);
+}
+exports.setOutputs = setOutputs;
 
 
 /***/ }),
