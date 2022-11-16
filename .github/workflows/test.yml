@@ -6,7 +6,7 @@ on:
 jobs:
   self-test:
     runs-on: ubuntu-latest
-    name: credentials
+    name: self-test
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
@@ -22,7 +22,8 @@ jobs:
       - name: test aliyun cli
         run: |
           set -e
-          wget https://github.com/aliyun/aliyun-cli/releases/download/v3.0.133/aliyun-cli-linux-3.0.133-amd64.tgz > /dev/null
+          wget https://github.com/aliyun/aliyun-cli/releases/download/v3.0.133/aliyun-cli-linux-3.0.133-amd64.tgz --no-verbose
           tar zxvf aliyun-cli-linux-3.0.133-amd64.tgz
           chmod +x ./aliyun
+          export ALIBABACLOUD_REGION_ID=ap-southeast-1
           ./aliyun sts GetCallerIdentity | jq .IdentityType

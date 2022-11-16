@@ -4,8 +4,12 @@ import * as core from "@actions/core";
 import {setSecret} from "@actions/core";
 
 export function exportEnvs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
-    core.setSecret(accessKeySecret)
-    core.setSecret(securityToken)
+    if (accessKeySecret !== "") {
+        core.setSecret(accessKeySecret)
+    }
+    if (securityToken !== "") {
+        core.setSecret(securityToken)
+    }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_ID', accessKeyId);
