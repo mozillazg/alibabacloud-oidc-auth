@@ -29,8 +29,10 @@ async function assumeRole(region: string, roleArn: string, oidcArn: string,
         roleSessionName: sessionName,
     })
     const opts = new teaUtil.RuntimeOptions({
-        autoretry: retries > 0,
+        autoretry: true,
         maxAttempts: retries,
+        backoffPolicy: 'fixed',
+        backoffPeriod: 2000,
     });
 
     return client.assumeRoleWithOIDCWithOptions(req, opts).then(function (data) {
