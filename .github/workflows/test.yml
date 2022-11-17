@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  self-test:
+  export-env:
     runs-on: ubuntu-latest
     name: self-test
     permissions:
@@ -19,6 +19,7 @@ jobs:
         with:
           role-arn-to-assume: '${{ secrets.ROLE_ARN }}'
           oidc-provider-arn: '${{ secrets.OIDC_ARN }}'
+          export-environment-variables: 'true'
 
       - name: test aliyun cli (using env)
         env:
@@ -29,6 +30,23 @@ jobs:
           tar zxvf aliyun-cli-linux-3.0.133-amd64.tgz
           chmod +x ./aliyun
           ./aliyun sts GetCallerIdentity | jq .IdentityType
+
+  set-outputs:
+    runs-on: ubuntu-latest
+    name: self-test
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: get credentials
+        id: get-credentials
+        uses: ./ # Uses an action in the root directory
+        with:
+          role-arn-to-assume: '${{ secrets.ROLE_ARN }}'
+          oidc-provider-arn: '${{ secrets.OIDC_ARN }}'
+          set-outputs: 'true'
 
       - name: test oss cli (using outputs)
         run: |

@@ -2729,6 +2729,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const utils = __importStar(__nccwpck_require__(314));
 function main() {
     utils.exportEnvs('', '', '');
+    utils.setOutputs('', '', '');
 }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {

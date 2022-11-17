@@ -45,7 +45,7 @@ inputs:
       - ALIBABACLOUD_ACCESS_KEY_SECRET
       - ALIBABACLOUD_SECURITY_TOKEN
       If false, the action will not export any environment variables.
-    default: 'true'
+    default: 'false'
     required: false
 
   set-outputs:
@@ -54,7 +54,7 @@ inputs:
       - access-key-id
       - access-key-secret
       - security-token
-    default: 'true'
+    default: 'false'
     required: false
 
   retries:
