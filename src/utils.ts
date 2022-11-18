@@ -1,16 +1,17 @@
 'use strict';
 
 import * as core from "@actions/core";
+import * as github from "@actions/github";
 
 export function exportEnvs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
     if (accessKeyId) {
-        core.setSecret(accessKeyId)
+        core.setSecret(accessKeyId);
     }
     if (accessKeySecret) {
-        core.setSecret(accessKeySecret)
+        core.setSecret(accessKeySecret);
     }
     if (securityToken) {
-        core.setSecret(securityToken)
+        core.setSecret(securityToken);
     }
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
@@ -26,15 +27,33 @@ export function exportEnvs(accessKeyId: string, accessKeySecret: string, securit
 
 export function setOutputs(accessKeyId: string, accessKeySecret: string, securityToken: string) {
     if (accessKeyId) {
-        core.setSecret(accessKeyId)
+        core.setSecret(accessKeyId);
     }
     if (accessKeySecret) {
-        core.setSecret(accessKeySecret)
+        core.setSecret(accessKeySecret);
     }
     if (securityToken) {
-        core.setSecret(securityToken)
+        core.setSecret(securityToken);
     }
     core.setOutput('access-key-id', accessKeyId);
     core.setOutput('access-key-secret', accessKeySecret);
     core.setOutput('security-token', securityToken);
 }
+
+export function genSessionName(rawName: string) {
+    let finalName = rawName;
+    if (finalName.length < 2) {
+        finalName = 'github-actions-<orgName>-<repoName>';
+    }
+    if (finalName.includes('<orgName>')) {
+        finalName = finalName.replace('<orgName>', github.context.repo.owner);
+    }
+    if (finalName.includes('<repoName>')) {
+        finalName = finalName.replace('<repoName>', github.context.repo.repo);
+    }
+    if (finalName.length >= 64) {
+        finalName = finalName.slice(0, 63);
+    }
+    return finalName;
+}
+

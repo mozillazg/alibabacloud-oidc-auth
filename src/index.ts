@@ -7,13 +7,12 @@ import Credential, { Config } from '@alicloud/credentials';
 import * as teaUtil from  '@alicloud/tea-util';
 import { withRetries } from '@google-github-actions/actions-utils';
 import * as utils from  "./utils";
-import {setOutputs} from "./utils";
 
 async function assumeRole(region: string, roleArn: string, oidcArn: string,
                           oidcToken: string, durationSeconds: Number, sessionName: string) {
     const cred = new Credential(new Config({
         type: 'access_key',
-        accessKeyId: 'xxx',
+        accessKeyId: 'alibabacloud-oidc-auth',
         accessKeySecret: 'xxx',
     }))
     const conf = new openapi.Config({
@@ -43,19 +42,20 @@ async function assumeRole(region: string, roleArn: string, oidcArn: string,
             // @ts-ignore
             securityToken: data.body.credentials.securityToken,
         }
-    })
+    });
 }
 
 async function main() {
     const audience = core.getInput('audience', { required: false });
     const oidcToken = await core.getIDToken(audience);
-    const region = core.getInput('region', { required: false });
     const roleArn = core.getInput('role-arn-to-assume', { required: true });
     const oidcArn = core.getInput('oidc-provider-arn', { required: true });
+    const region = core.getInput('region', { required: false });
     const durationSeconds = Number(core.getInput('role-duration-seconds', { required: false }));
-    const sessionName = core.getInput('role-session-name', { required: false });
+    const rawSessionName = core.getInput('role-session-name', { required: false });
     const exportEnvs = core.getBooleanInput('export-environment-variables', { required: false });
     const setOutputs = core.getBooleanInput('set-outputs', { required: false });
+    const sessionName = utils.genSessionName(rawSessionName);
 
     const { accessKeyId, accessKeySecret, securityToken } = await assumeRole(
         region, roleArn, oidcArn, oidcToken, durationSeconds, sessionName);

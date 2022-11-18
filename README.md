@@ -1,6 +1,6 @@
 # alibabacloud-oidc-auth
 
-GitHub Action for authenticating to Alibaba Cloud with GitHub Actions OIDC tokens.
+GitHub Action for authenticating to Alibaba Cloud with [GitHub Actions OIDC tokens](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect).
 
 ## Inputs
 
@@ -11,10 +11,12 @@ GitHub Action for authenticating to Alibaba Cloud with GitHub Actions OIDC token
 * `audience`: (Optional) The audience (aud) parameter in GitHub's generated OIDC
   token. The default value is: `actions.github.com`
 * `role-duration-seconds`: (Optional) The validity period of the STS token. The default value is: `3600`
-* `role-session-name`: (Optional) The custom name of the role session. The default value is: `github-action`
+* `role-session-name`: (Optional) The custom name of the role session. The default value is: `github-actions-<orgName>-<repoName>`
 * `region`: (Optional) The region id of STS endpoint. The default value is: `ap-southeast-1`
 
 ## Outputs
+
+Only available when `set-outputs` is `true`.
 
 * `access-key-id`: (Optional) The AccessKey ID.
 * `access-key-secret`: (Optional) The AccessKey secret.

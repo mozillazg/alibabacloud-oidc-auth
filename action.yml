@@ -29,7 +29,7 @@ inputs:
   role-session-name:
     description: |-
       Role session name
-    default: 'github-action'
+    default: 'github-actions-<orgName>-<repoName>'
     required: false
   export-environment-variables:
     description: |-
