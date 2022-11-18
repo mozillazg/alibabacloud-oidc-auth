@@ -3556,7 +3556,7 @@ class Client {
      * @param config config contains the necessary information to create a client
      */
     constructor(config) {
-        if (tea_util_1.default.isUnset($tea.toMap(config))) {
+        if (tea_util_1.default.isUnset(config)) {
             throw $tea.newError({
                 code: "ParameterMissing",
                 message: "'config' can not be unset",
@@ -3651,7 +3651,7 @@ class Client {
                 request_.pathname = "/";
                 let globalQueries = {};
                 let globalHeaders = {};
-                if (!tea_util_1.default.isUnset($tea.toMap(this._globalParameters))) {
+                if (!tea_util_1.default.isUnset(this._globalParameters)) {
                     let globalParams = this._globalParameters;
                     if (!tea_util_1.default.isUnset(globalParams.queries)) {
                         globalQueries = globalParams.queries;
@@ -3816,7 +3816,7 @@ class Client {
                 request_.pathname = pathname;
                 let globalQueries = {};
                 let globalHeaders = {};
-                if (!tea_util_1.default.isUnset($tea.toMap(this._globalParameters))) {
+                if (!tea_util_1.default.isUnset(this._globalParameters)) {
                     let globalParams = this._globalParameters;
                     if (!tea_util_1.default.isUnset(globalParams.queries)) {
                         globalQueries = globalParams.queries;
@@ -3975,7 +3975,7 @@ class Client {
                 request_.pathname = pathname;
                 let globalQueries = {};
                 let globalHeaders = {};
-                if (!tea_util_1.default.isUnset($tea.toMap(this._globalParameters))) {
+                if (!tea_util_1.default.isUnset(this._globalParameters)) {
                     let globalParams = this._globalParameters;
                     if (!tea_util_1.default.isUnset(globalParams.queries)) {
                         globalQueries = globalParams.queries;
@@ -4132,7 +4132,7 @@ class Client {
                 request_.pathname = params.pathname;
                 let globalQueries = {};
                 let globalHeaders = {};
-                if (!tea_util_1.default.isUnset($tea.toMap(this._globalParameters))) {
+                if (!tea_util_1.default.isUnset(this._globalParameters)) {
                     let globalParams = this._globalParameters;
                     if (!tea_util_1.default.isUnset(globalParams.queries)) {
                         globalQueries = globalParams.queries;
@@ -4322,7 +4322,7 @@ class Client {
                 let headers = this.getRpcHeaders();
                 let globalQueries = {};
                 let globalHeaders = {};
-                if (!tea_util_1.default.isUnset($tea.toMap(this._globalParameters))) {
+                if (!tea_util_1.default.isUnset(this._globalParameters)) {
                     let globalParams = this._globalParameters;
                     if (!tea_util_1.default.isUnset(globalParams.queries)) {
                         globalQueries = globalParams.queries;
@@ -4402,7 +4402,7 @@ class Client {
         throw $tea.newUnretryableError(_lastRequest);
     }
     async callApi(params, request, runtime) {
-        if (tea_util_1.default.isUnset($tea.toMap(params))) {
+        if (tea_util_1.default.isUnset(params)) {
             throw $tea.newError({
                 code: "ParameterMissing",
                 message: "'params' can not be unset",
@@ -4507,6 +4507,13 @@ class Client {
                 message: "'config.endpoint' can not be empty",
             });
         }
+    }
+    /**
+     * set gateway client
+     * @param spi.
+     */
+    setGatewayClient(spi) {
+        this._spi = spi;
     }
     /**
      * set RPC header for debug
@@ -6204,6 +6211,9 @@ class RuntimeOptions extends $tea.Model {
         return {
             autoretry: 'autoretry',
             ignoreSSL: 'ignoreSSL',
+            key: 'key',
+            cert: 'cert',
+            ca: 'ca',
             maxAttempts: 'max_attempts',
             backoffPolicy: 'backoff_policy',
             backoffPeriod: 'backoff_period',
@@ -6220,6 +6230,9 @@ class RuntimeOptions extends $tea.Model {
         return {
             autoretry: 'boolean',
             ignoreSSL: 'boolean',
+            key: 'string',
+            cert: 'string',
+            ca: 'string',
             maxAttempts: 'number',
             backoffPolicy: 'string',
             backoffPeriod: 'number',
