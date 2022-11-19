@@ -9,8 +9,8 @@ GitHub Action for authenticating to Alibaba Cloud with `GitHub Actions OIDC toke
 Inputs
 ======
 
-* ``role-arn-to-assume``: (Required) The arn of Ram role.
-* ``oidc-provider-arn``: (Required) The arn of OIDC IdP.
+* ``role-arn-to-assume``: (**Required**) The arn of RAM role.
+* ``oidc-provider-arn``: (**Required**) The arn of OIDC IdP.
 * ``export-environment-variables``: (Optional) Export common environment variables. The default value is: ``false``
 * ``set-outputs``: (Optional) Setting action outputs. The default value is: ``false``
 * ``audience``: (Optional) The audience (aud) parameter in GitHub's generated OIDC
@@ -24,9 +24,9 @@ Outputs
 
 Only available when ``set-outputs`` is ``true``.
 
-* ``access-key-id``: (Optional) The AccessKey ID.
-* ``access-key-secret``: (Optional) The AccessKey secret.
-* ``security-token``: (Optional) The STS token.
+* ``access-key-id``: (Optional) The Alibaba Cloud Access Key ID.
+* ``access-key-secret``: (Optional) The Alibaba Cloud Access Key Secret.
+* ``security-token``: (Optional) The Alibaba Cloud STS Token.
 
 
 Example Usage

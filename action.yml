@@ -50,10 +50,11 @@ inputs:
 
   set-outputs:
     description: |-
-      If true, the action will setting credentials as action outputs, including:
+      If true, the action will set credentials as action outputs, including:
       - access-key-id
       - access-key-secret
       - security-token
+      If false, the action will not set any action outputs.
     default: 'false'
     required: false
 
@@ -65,13 +66,16 @@ inputs:
 
 outputs:
   access-key-id:
-    description: access key id
+    description: |-
+      The Alibaba Cloud Access Key ID
 
   access-key-secret:
-    description: access key secret
+    description: |-
+      The Alibaba Cloud Access Key Secret
 
   security-token:
-    description: security token
+    description: |-
+      The Alibaba Cloud Security Token (STS Token)
 
 branding:
   icon: 'lock'
