@@ -6,29 +6,6 @@ GitHub Action for authenticating to Alibaba Cloud with `GitHub Actions OIDC toke
 .. contents::
 
 
-Inputs
-======
-
-* ``role-arn-to-assume``: (**Required**) The arn of RAM role.
-* ``oidc-provider-arn``: (**Required**) The arn of OIDC IdP.
-* ``export-environment-variables``: (Optional) Export common environment variables. The default value is: ``false``
-* ``set-outputs``: (Optional) Setting action outputs. The default value is: ``false``
-* ``audience``: (Optional) The audience (aud) parameter in GitHub's generated OIDC
-  token. The default value is: ``actions.github.com``
-* ``role-duration-seconds``: (Optional) The validity period of the STS token. The default value is: ``3600``
-* ``role-session-name``: (Optional) The custom name of the role session. The default value is: ``github-actions-<orgName>-<repoName>``
-* ``region``: (Optional) The region id of STS endpoint. The default value is: ``ap-southeast-1``
-
-Outputs
-========
-
-Only available when ``set-outputs`` is ``true``.
-
-* ``access-key-id``: (Optional) The Alibaba Cloud Access Key ID.
-* ``access-key-secret``: (Optional) The Alibaba Cloud Access Key Secret.
-* ``security-token``: (Optional) The Alibaba Cloud STS Token.
-
-
 Example Usage
 ==============
 
@@ -74,6 +51,41 @@ Or
                 --sts-token ${{ steps.get-credentials.outputs.security-token }} --mode StsToken \
                 --endpoint oss-ap-southeast-1.aliyuncs.com \
                 stat oss://test-bucket
+
+
+Inputs
+======
+
+* ``role-arn-to-assume``: (**Required**) The arn of RAM role.
+* ``oidc-provider-arn``: (**Required**) The arn of OIDC IdP.
+* ``export-environment-variables``: (Optional) Export common environment variables, including:
+
+  - ``ALIBABA_CLOUD_ACCESS_KEY_ID``
+  - ``ALIBABA_CLOUD_ACCESS_KEY_SECRET``
+  - ``ALIBABA_CLOUD_SECURITY_TOKEN``
+  - ``ALICLOUD_ACCESS_KEY``
+  - ``ALICLOUD_SECRET_KEY``
+  - ``ALICLOUD_ACCESS_KEY_STS_TOKEN``
+  - ``ALIBABACLOUD_ACCESS_KEY_ID``
+  - ``ALIBABACLOUD_ACCESS_KEY_SECRET``
+  - ``ALIBABACLOUD_SECURITY_TOKEN``
+
+  The default value is: ``false``
+* ``set-outputs``: (Optional) Setting action outputs. The default value is: ``false``
+* ``audience``: (Optional) The audience (aud) parameter in GitHub's generated OIDC
+  token. The default value is: ``actions.github.com``
+* ``role-duration-seconds``: (Optional) The validity period of the STS token. The default value is: ``3600``
+* ``role-session-name``: (Optional) The custom name of the role session. The default value is: ``github-actions-<orgName>-<repoName>``
+* ``region``: (Optional) The region id of STS endpoint. The default value is: ``ap-southeast-1``
+
+Outputs
+========
+
+Only available when ``set-outputs`` is ``true``.
+
+* ``access-key-id``: (Optional) The Alibaba Cloud Access Key ID.
+* ``access-key-secret``: (Optional) The Alibaba Cloud Access Key Secret.
+* ``security-token``: (Optional) The Alibaba Cloud STS Token.
 
 
 RAM Configuration
