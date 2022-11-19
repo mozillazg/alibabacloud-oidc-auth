@@ -41,15 +41,20 @@ export function setOutputs(accessKeyId: string, accessKeySecret: string, securit
 }
 
 export function genSessionName(rawName: string) {
+    const replaceIllegalCharacters = function (s: string) {
+        return s.replace(/[^-\w.@]/g, '@');
+    };
     let finalName = rawName;
     if (finalName.length < 2) {
         finalName = 'github-actions-<orgName>-<repoName>';
     }
     if (finalName.includes('<orgName>')) {
-        finalName = finalName.replace('<orgName>', github.context.repo.owner);
+        const orgName = github.context.repo.owner;
+        finalName = finalName.replace('<orgName>', replaceIllegalCharacters(orgName));
     }
     if (finalName.includes('<repoName>')) {
-        finalName = finalName.replace('<repoName>', github.context.repo.repo);
+        const repoName = github.context.repo.repo;
+        finalName = finalName.replace('<repoName>', replaceIllegalCharacters(repoName));
     }
     if (finalName.length >= 64) {
         finalName = finalName.slice(0, 63);
