@@ -5,7 +5,7 @@ import Client, { AssumeRoleWithOIDCRequest } from '@alicloud/sts20150401';
 import * as openapi from '@alicloud/openapi-client';
 import Credential, { Config } from '@alicloud/credentials';
 import * as teaUtil from  '@alicloud/tea-util';
-import { withRetries } from '@google-github-actions/actions-utils';
+import { withRetries, errorMessage } from '@google-github-actions/actions-utils';
 import * as utils from  "./utils";
 
 async function assumeRole(region: string, roleArn: string, oidcArn: string,
@@ -72,10 +72,18 @@ async function main() {
 
 async function run() {
     const retries = Number(core.getInput('retries', { required: false }));
-    await withRetries(main, {
-        retries: retries,
-        backoff: 300,
-    })();
+
+    try {
+        await withRetries(main, {
+            retries: retries,
+            backoff: 300,
+        })();
+    } catch (e) {
+        // @ts-ignore
+        core.error(e);
+        const msg = errorMessage(e);
+        core.setFailed(`mozillazg/alibabacloud-oidc-auth failed with: ${msg}`);
+    }
 }
 
 run();
