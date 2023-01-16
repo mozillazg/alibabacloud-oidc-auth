@@ -27,7 +27,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
-    "@alicloud/credentials": "^2.2.5",
+    "@alicloud/credentials": "^2.2.6",
     "@alicloud/openapi-client": "^0.4.4",
     "@alicloud/sts20150401": "^1.1.2",
     "@alicloud/tea-util": "^1.4.5",
