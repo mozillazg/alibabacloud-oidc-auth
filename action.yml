@@ -36,15 +36,17 @@ inputs:
       If true, the action will export common environment variables which are
       known to be consumed by popular downstream libraries and tools, including:
       - ALIBABA_CLOUD_ACCESS_KEY_ID
-      - ALIBABA_CLOUD_ACCESS_KEY_SECRET
-      - ALIBABA_CLOUD_SECURITY_TOKEN
       - ALICLOUD_ACCESS_KEY
-      - ALICLOUD_SECRET_KEY
-      - ALICLOUD_SECURITY_TOKEN
-      - ALICLOUD_ACCESS_KEY_STS_TOKEN
       - ALIBABACLOUD_ACCESS_KEY_ID
+      - ALICLOUD_ACCESS_KEY_ID
+      - ALIBABA_CLOUD_ACCESS_KEY_SECRET
+      - ALICLOUD_SECRET_KEY
       - ALIBABACLOUD_ACCESS_KEY_SECRET
+      - ALICLOUD_ACCESS_KEY_SECRET
+      - ALIBABA_CLOUD_SECURITY_TOKEN
+      - ALICLOUD_ACCESS_KEY_STS_TOKEN
       - ALIBABACLOUD_SECURITY_TOKEN
+      - ALICLOUD_SECURITY_TOKEN
       If false, the action will not export any environment variables.
     default: 'false'
     required: false

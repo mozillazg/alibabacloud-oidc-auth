@@ -3504,6 +3504,9 @@ class Config extends $tea.Model {
             signatureVersion: 'signatureVersion',
             signatureAlgorithm: 'signatureAlgorithm',
             globalParameters: 'globalParameters',
+            key: 'key',
+            cert: 'cert',
+            ca: 'ca',
         };
     }
     static types() {
@@ -3533,6 +3536,9 @@ class Config extends $tea.Model {
             signatureVersion: 'string',
             signatureAlgorithm: 'string',
             globalParameters: GlobalParameters,
+            key: 'string',
+            cert: 'string',
+            ca: 'string',
         };
     }
 }
@@ -3644,6 +3650,9 @@ class Client {
         this._signatureVersion = config.signatureVersion;
         this._signatureAlgorithm = config.signatureAlgorithm;
         this._globalParameters = config.globalParameters;
+        this._key = config.key;
+        this._cert = config.cert;
+        this._ca = config.ca;
     }
     /**
      * Encapsulate the request and invoke the network
@@ -3660,6 +3669,9 @@ class Client {
     async doRPCRequest(action, version, protocol, method, authType, bodyType, request, runtime) {
         let _runtime = {
             timeouted: "retry",
+            key: tea_util_1.default.defaultString(runtime.key, this._key),
+            cert: tea_util_1.default.defaultString(runtime.cert, this._cert),
+            ca: tea_util_1.default.defaultString(runtime.ca, this._ca),
             readTimeout: tea_util_1.default.defaultNumber(runtime.readTimeout, this._readTimeout),
             connectTimeout: tea_util_1.default.defaultNumber(runtime.connectTimeout, this._connectTimeout),
             httpProxy: tea_util_1.default.defaultString(runtime.httpProxy, this._httpProxy),
@@ -3749,7 +3761,7 @@ class Client {
                         message: `code: ${response_.statusCode}, ${Client.defaultAny(err["Message"], err["message"])} request id: ${requestId}`,
                         data: err,
                         description: `${Client.defaultAny(err["Description"], err["description"])}`,
-                        accessDeniedDetail: err["AccessDeniedDetail"],
+                        accessDeniedDetail: Client.defaultAny(err["AccessDeniedDetail"], err["accessDeniedDetail"]),
                     });
                 }
                 if (tea_util_1.default.equalString(bodyType, "binary")) {
@@ -3825,6 +3837,9 @@ class Client {
     async doROARequest(action, version, protocol, method, authType, pathname, bodyType, request, runtime) {
         let _runtime = {
             timeouted: "retry",
+            key: tea_util_1.default.defaultString(runtime.key, this._key),
+            cert: tea_util_1.default.defaultString(runtime.cert, this._cert),
+            ca: tea_util_1.default.defaultString(runtime.ca, this._ca),
             readTimeout: tea_util_1.default.defaultNumber(runtime.readTimeout, this._readTimeout),
             connectTimeout: tea_util_1.default.defaultNumber(runtime.connectTimeout, this._connectTimeout),
             httpProxy: tea_util_1.default.defaultString(runtime.httpProxy, this._httpProxy),
@@ -3908,7 +3923,7 @@ class Client {
                         message: `code: ${response_.statusCode}, ${Client.defaultAny(err["Message"], err["message"])} request id: ${requestId}`,
                         data: err,
                         description: `${Client.defaultAny(err["Description"], err["description"])}`,
-                        accessDeniedDetail: err["AccessDeniedDetail"],
+                        accessDeniedDetail: Client.defaultAny(err["AccessDeniedDetail"], err["accessDeniedDetail"]),
                     });
                 }
                 if (tea_util_1.default.equalString(bodyType, "binary")) {
@@ -3984,6 +3999,9 @@ class Client {
     async doROARequestWithForm(action, version, protocol, method, authType, pathname, bodyType, request, runtime) {
         let _runtime = {
             timeouted: "retry",
+            key: tea_util_1.default.defaultString(runtime.key, this._key),
+            cert: tea_util_1.default.defaultString(runtime.cert, this._cert),
+            ca: tea_util_1.default.defaultString(runtime.ca, this._ca),
             readTimeout: tea_util_1.default.defaultNumber(runtime.readTimeout, this._readTimeout),
             connectTimeout: tea_util_1.default.defaultNumber(runtime.connectTimeout, this._connectTimeout),
             httpProxy: tea_util_1.default.defaultString(runtime.httpProxy, this._httpProxy),
@@ -4066,7 +4084,7 @@ class Client {
                         message: `code: ${response_.statusCode}, ${Client.defaultAny(err["Message"], err["message"])} request id: ${Client.defaultAny(err["RequestId"], err["requestId"])}`,
                         data: err,
                         description: `${Client.defaultAny(err["Description"], err["description"])}`,
-                        accessDeniedDetail: err["AccessDeniedDetail"],
+                        accessDeniedDetail: Client.defaultAny(err["AccessDeniedDetail"], err["accessDeniedDetail"]),
                     });
                 }
                 if (tea_util_1.default.equalString(bodyType, "binary")) {
@@ -4141,6 +4159,9 @@ class Client {
     async doRequest(params, request, runtime) {
         let _runtime = {
             timeouted: "retry",
+            key: tea_util_1.default.defaultString(runtime.key, this._key),
+            cert: tea_util_1.default.defaultString(runtime.cert, this._cert),
+            ca: tea_util_1.default.defaultString(runtime.ca, this._ca),
             readTimeout: tea_util_1.default.defaultNumber(runtime.readTimeout, this._readTimeout),
             connectTimeout: tea_util_1.default.defaultNumber(runtime.connectTimeout, this._connectTimeout),
             httpProxy: tea_util_1.default.defaultString(runtime.httpProxy, this._httpProxy),
@@ -4257,7 +4278,7 @@ class Client {
                         message: `code: ${response_.statusCode}, ${Client.defaultAny(err["Message"], err["message"])} request id: ${Client.defaultAny(err["RequestId"], err["requestId"])}`,
                         data: err,
                         description: `${Client.defaultAny(err["Description"], err["description"])}`,
-                        accessDeniedDetail: err["AccessDeniedDetail"],
+                        accessDeniedDetail: Client.defaultAny(err["AccessDeniedDetail"], err["accessDeniedDetail"]),
                     });
                 }
                 if (tea_util_1.default.equalString(params.bodyType, "binary")) {
@@ -4332,6 +4353,9 @@ class Client {
     async execute(params, request, runtime) {
         let _runtime = {
             timeouted: "retry",
+            key: tea_util_1.default.defaultString(runtime.key, this._key),
+            cert: tea_util_1.default.defaultString(runtime.cert, this._cert),
+            ca: tea_util_1.default.defaultString(runtime.ca, this._ca),
             readTimeout: tea_util_1.default.defaultNumber(runtime.readTimeout, this._readTimeout),
             connectTimeout: tea_util_1.default.defaultNumber(runtime.connectTimeout, this._connectTimeout),
             httpProxy: tea_util_1.default.defaultString(runtime.httpProxy, this._httpProxy),
@@ -4829,9 +4853,33 @@ class Client {
                 if (isModelClass(types[key])) {
                     output[key] = new types[key](output[key]);
                     Client.convert(inputModel[key], output[key]);
-                    continue;
                 }
-                output[key] = inputModel[key];
+                else if (types[key] && types[key].type === 'array') {
+                    output[key] = inputModel[key].map(function (d) {
+                        if (isModelClass(types[key].itemType)) {
+                            var item = new types[key].itemType({});
+                            Client.convert(d, item);
+                            return item;
+                        }
+                        return d;
+                    });
+                }
+                else if (types[key] && types[key].type === 'map') {
+                    output[key] = {};
+                    Object.keys(inputModel[key]).map(function (d) {
+                        if (isModelClass(types[key].valueType)) {
+                            var item = new types[key].valueType({});
+                            Client.convert(inputModel[key][d], item);
+                            output[key][d] = item;
+                        }
+                        else {
+                            output[key][d] = inputModel[key][d];
+                        }
+                    });
+                }
+                else {
+                    output[key] = inputModel[key];
+                }
             }
         }
     }
@@ -4932,7 +4980,7 @@ class Client {
             return querystring_1.default.stringify(target, '&&');
         }
         else if (style === 'json') {
-            return JSON.stringify(array);
+            return JSON.stringify(toMap(array));
         }
         else if (style === 'simple') {
             return array.join(',');
@@ -5092,6 +5140,7 @@ class AssumeRoleRequest extends $tea.Model {
     static names() {
         return {
             durationSeconds: 'DurationSeconds',
+            externalId: 'ExternalId',
             policy: 'Policy',
             roleArn: 'RoleArn',
             roleSessionName: 'RoleSessionName',
@@ -5100,6 +5149,7 @@ class AssumeRoleRequest extends $tea.Model {
     static types() {
         return {
             durationSeconds: 'number',
+            externalId: 'string',
             policy: 'string',
             roleArn: 'string',
             roleSessionName: 'string',
@@ -5545,11 +5595,30 @@ class Client extends openapi_client_1.default {
         }
         return endpoint_util_1.default.getEndpointRules(productId, regionId, endpointRule, network, suffix);
     }
+    /**
+      * ### Prerequisites
+      * You cannot use an Alibaba Cloud account to call this operation. The requester of this operation can only be a RAM user or RAM role. Make sure that the AliyunSTSAssumeRoleAccess policy is attached to the requester. After this policy is attached to the requester, the requester has the management permissions on STS.
+      * If you do not attach the AliyunSTSAssumeRoleAccess policy to the requester, the following error message is returned:
+      * `You are not authorized to do this action. You should be authorized by RAM.`
+      * You can refer to the following information to troubleshoot the error:
+      * *   Cause of the error: The policy that is required to assume a RAM role is not attached to the requester. To resolve this issue, attach the AliyunSTSAssumeRoleAccess policy or a custom policy to the requester. For more information, see [Can I specify the RAM role that a RAM user can assume?](~~39744~~) and [Grant permissions to a RAM user](~~116146~~).
+      * *   Cause of the error: The requester is not authorized to assume the RAM role. To resolve this issue, add the requester to the Principal element in the trust policy of the RAM role For more information, see [Edit the trust policy of a RAM role](~~116819~~).
+      * ### Best practices
+      * An STS token is valid for a period of time after it is issued, and the number of STS tokens that can be issued within an interval is also limited. Therefore, we recommend that you configure a proper validity period for an STS token and repeatedly use the token within this period. This prevents frequent issuing of STS tokens from adversely affecting your services if a large number of requests are sent. For more information about the limit, see [Is the number of STS API requests limited?](~~39744~~) You can configure the `DurationSeconds` parameter to specify a validity period for an STS token.
+      * When you upload or download Object Storage Service (OSS) objects on mobile devices, a large number of STS API requests are sent. In this case, repeated use of an STS token may not meet your business requirements. To avoid the limit on STS API requests from affecting access to OSS, you can **add a signature to the URL of an OSS object**. For more information, see [Add signatures to URLs](~~31952~~) and [Obtain signature information from the server and upload data to OSS](~~31926~~).
+      *
+      * @param request AssumeRoleRequest
+      * @param runtime runtime options for this request RuntimeOptions
+      * @return AssumeRoleResponse
+     */
     async assumeRoleWithOptions(request, runtime) {
         tea_util_1.default.validateModel(request);
         let query = {};
         if (!tea_util_1.default.isUnset(request.durationSeconds)) {
             query["DurationSeconds"] = request.durationSeconds;
+        }
+        if (!tea_util_1.default.isUnset(request.externalId)) {
+            query["ExternalId"] = request.externalId;
         }
         if (!tea_util_1.default.isUnset(request.policy)) {
             query["Policy"] = request.policy;
@@ -5576,10 +5645,35 @@ class Client extends openapi_client_1.default {
         });
         return $tea.cast(await this.callApi(params, req, runtime), new AssumeRoleResponse({}));
     }
+    /**
+      * ### Prerequisites
+      * You cannot use an Alibaba Cloud account to call this operation. The requester of this operation can only be a RAM user or RAM role. Make sure that the AliyunSTSAssumeRoleAccess policy is attached to the requester. After this policy is attached to the requester, the requester has the management permissions on STS.
+      * If you do not attach the AliyunSTSAssumeRoleAccess policy to the requester, the following error message is returned:
+      * `You are not authorized to do this action. You should be authorized by RAM.`
+      * You can refer to the following information to troubleshoot the error:
+      * *   Cause of the error: The policy that is required to assume a RAM role is not attached to the requester. To resolve this issue, attach the AliyunSTSAssumeRoleAccess policy or a custom policy to the requester. For more information, see [Can I specify the RAM role that a RAM user can assume?](~~39744~~) and [Grant permissions to a RAM user](~~116146~~).
+      * *   Cause of the error: The requester is not authorized to assume the RAM role. To resolve this issue, add the requester to the Principal element in the trust policy of the RAM role For more information, see [Edit the trust policy of a RAM role](~~116819~~).
+      * ### Best practices
+      * An STS token is valid for a period of time after it is issued, and the number of STS tokens that can be issued within an interval is also limited. Therefore, we recommend that you configure a proper validity period for an STS token and repeatedly use the token within this period. This prevents frequent issuing of STS tokens from adversely affecting your services if a large number of requests are sent. For more information about the limit, see [Is the number of STS API requests limited?](~~39744~~) You can configure the `DurationSeconds` parameter to specify a validity period for an STS token.
+      * When you upload or download Object Storage Service (OSS) objects on mobile devices, a large number of STS API requests are sent. In this case, repeated use of an STS token may not meet your business requirements. To avoid the limit on STS API requests from affecting access to OSS, you can **add a signature to the URL of an OSS object**. For more information, see [Add signatures to URLs](~~31952~~) and [Obtain signature information from the server and upload data to OSS](~~31926~~).
+      *
+      * @param request AssumeRoleRequest
+      * @return AssumeRoleResponse
+     */
     async assumeRole(request) {
         let runtime = new $Util.RuntimeOptions({});
         return await this.assumeRoleWithOptions(request, runtime);
     }
+    /**
+      * ### Prerequisites
+      * - An OIDC token is obtained from an external identity provider (IdP).
+      * - An OIDC IdP is created in the RAM console. For more information, see [Create an OIDC IdP](~~327123~~) or [CreateOIDCProvider](~~327135~~).
+      * - A RAM role whose trusted entity is an OIDC IdP is created in the RAM console. For more information, see [Create a RAM role for a trusted IdP](~~116805~~) or [CreateRole](~~28710~~).
+      *
+      * @param request AssumeRoleWithOIDCRequest
+      * @param runtime runtime options for this request RuntimeOptions
+      * @return AssumeRoleWithOIDCResponse
+     */
     async assumeRoleWithOIDCWithOptions(request, runtime) {
         tea_util_1.default.validateModel(request);
         let query = {};
@@ -5617,10 +5711,29 @@ class Client extends openapi_client_1.default {
         });
         return $tea.cast(await this.callApi(params, req, runtime), new AssumeRoleWithOIDCResponse({}));
     }
+    /**
+      * ### Prerequisites
+      * - An OIDC token is obtained from an external identity provider (IdP).
+      * - An OIDC IdP is created in the RAM console. For more information, see [Create an OIDC IdP](~~327123~~) or [CreateOIDCProvider](~~327135~~).
+      * - A RAM role whose trusted entity is an OIDC IdP is created in the RAM console. For more information, see [Create a RAM role for a trusted IdP](~~116805~~) or [CreateRole](~~28710~~).
+      *
+      * @param request AssumeRoleWithOIDCRequest
+      * @return AssumeRoleWithOIDCResponse
+     */
     async assumeRoleWithOIDC(request) {
         let runtime = new $Util.RuntimeOptions({});
         return await this.assumeRoleWithOIDCWithOptions(request, runtime);
     }
+    /**
+      * ### Prerequisites
+      * - A SAML response is obtained from an external identity provider (IdP).
+      * - A SAML IdP is created in the RAM console. For more information, see [Create a SAML IdP](~~116083~~) or [CreateSAMLProvider](~~186846~~).
+      * - A RAM role whose trusted entity is a SAML IdP is created in the RAM console. For more information, see [Create a RAM role for a trusted IdP](~~116805~~) or [CreateRole](~~28710~~).
+      *
+      * @param request AssumeRoleWithSAMLRequest
+      * @param runtime runtime options for this request RuntimeOptions
+      * @return AssumeRoleWithSAMLResponse
+     */
     async assumeRoleWithSAMLWithOptions(request, runtime) {
         tea_util_1.default.validateModel(request);
         let query = {};
@@ -5655,6 +5768,15 @@ class Client extends openapi_client_1.default {
         });
         return $tea.cast(await this.callApi(params, req, runtime), new AssumeRoleWithSAMLResponse({}));
     }
+    /**
+      * ### Prerequisites
+      * - A SAML response is obtained from an external identity provider (IdP).
+      * - A SAML IdP is created in the RAM console. For more information, see [Create a SAML IdP](~~116083~~) or [CreateSAMLProvider](~~186846~~).
+      * - A RAM role whose trusted entity is a SAML IdP is created in the RAM console. For more information, see [Create a RAM role for a trusted IdP](~~116805~~) or [CreateRole](~~28710~~).
+      *
+      * @param request AssumeRoleWithSAMLRequest
+      * @return AssumeRoleWithSAMLResponse
+     */
     async assumeRoleWithSAML(request) {
         let runtime = new $Util.RuntimeOptions({});
         return await this.assumeRoleWithSAMLWithOptions(request, runtime);
@@ -7466,11 +7588,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseKVStringAndFile = exports.parseKVYAML = exports.parseKVJSON = exports.parseKVFile = exports.parseKVString = void 0;
+exports.parseKVStringAndFile = exports.parseKVYAML = exports.parseKVJSON = exports.parseKVFile = exports.parseKVString = exports.joinKVString = void 0;
 const yaml_1 = __importDefault(__nccwpck_require2_(4083));
 const fs_1 = __nccwpck_require2_(7147);
 const errors_1 = __nccwpck_require2_(6976);
 const validations_1 = __nccwpck_require2_(596);
+/**
+ * joinKVString joins the given KVPair using the provided separator.
+ *
+ * @param input KVPair to serialize.
+ * @param separator Join separator.
+ */
+function joinKVString(input, separator = ',') {
+    return Object.entries(input)
+        .map(([k, v]) => {
+        return `${k}=${v}`;
+    })
+        .join(separator);
+}
+exports.joinKVString = joinKVString;
 /**
  * parseKVString parses a string of the format "KEY1=VALUE1,KEY2=VALUE2" or
  * "KEY1=VALUE1\nKEY2=VALUE2". Keys or values that contain a separator must be
@@ -10755,7 +10891,7 @@ const prettifyError = (src, lc) => (error) => {
         let count = 1;
         const end = error.linePos[1];
         if (end && end.line === line && end.col > col) {
-            count = Math.min(end.col - col, 80 - ci);
+            count = Math.max(1, Math.min(end.col - col, 80 - ci));
         }
         const pointer = ' '.repeat(ci) + '^'.repeat(count);
         error.message += `:\n\n${lineStr}\n${pointer}\n`;
@@ -11289,12 +11425,12 @@ function findPair(items, key) {
     return undefined;
 }
 class YAMLMap extends Collection.Collection {
+    static get tagName() {
+        return 'tag:yaml.org,2002:map';
+    }
     constructor(schema) {
         super(Node.MAP, schema);
         this.items = [];
-    }
-    static get tagName() {
-        return 'tag:yaml.org,2002:map';
     }
     /**
      * Adds a value to the collection.
@@ -11402,12 +11538,12 @@ var Scalar = __nccwpck_require2_(9338);
 var toJS = __nccwpck_require2_(2463);
 
 class YAMLSeq extends Collection.Collection {
+    static get tagName() {
+        return 'tag:yaml.org,2002:seq';
+    }
     constructor(schema) {
         super(Node.SEQ, schema);
         this.items = [];
-    }
-    static get tagName() {
-        return 'tag:yaml.org,2002:seq';
     }
     add(value) {
         this.items.push(value);
@@ -15368,6 +15504,7 @@ function createStringifyContext(doc, options) {
         doubleQuotedAsJSON: false,
         doubleQuotedMinMultiLineLength: 40,
         falseStr: 'false',
+        flowCollectionPadding: true,
         indentSeq: true,
         lineWidth: 80,
         minContentWidth: 20,
@@ -15391,6 +15528,7 @@ function createStringifyContext(doc, options) {
     return {
         anchors: new Set(),
         doc,
+        flowCollectionPadding: opt.flowCollectionPadding ? ' ' : '',
         indent: '',
         indentStep: typeof opt.indent === 'number' ? ' '.repeat(opt.indent) : '  ',
         inFlow,
@@ -15547,7 +15685,7 @@ function stringifyBlockCollection({ comment, items }, ctx, { blockItemPrefix, fl
     return str;
 }
 function stringifyFlowCollection({ comment, items }, ctx, { flowChars, itemIndent, onComment }) {
-    const { indent, indentStep, options: { commentString } } = ctx;
+    const { indent, indentStep, flowCollectionPadding: fcPadding, options: { commentString } } = ctx;
     itemIndent += indentStep;
     const itemCtx = Object.assign({}, ctx, {
         indent: itemIndent,
@@ -15616,11 +15754,11 @@ function stringifyFlowCollection({ comment, items }, ctx, { flowChars, itemInden
             str += `\n${indent}${end}`;
         }
         else {
-            str = `${start} ${lines.join(' ')} ${end}`;
+            str = `${start}${fcPadding}${lines.join(' ')}${fcPadding}${end}`;
         }
     }
     if (comment) {
-        str += stringifyComment.lineComment(str, commentString(comment), indent);
+        str += stringifyComment.lineComment(str, indent, commentString(comment));
         if (onComment)
             onComment();
     }
@@ -15868,19 +16006,18 @@ function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
         if (keyComment)
             str += stringifyComment.lineComment(str, ctx.indent, commentString(keyComment));
     }
-    let vcb = '';
-    let valueComment = null;
+    let vsb, vcb, valueComment;
     if (Node.isNode(value)) {
-        if (value.spaceBefore)
-            vcb = '\n';
-        if (value.commentBefore) {
-            const cs = commentString(value.commentBefore);
-            vcb += `\n${stringifyComment.indentComment(cs, ctx.indent)}`;
-        }
+        vsb = !!value.spaceBefore;
+        vcb = value.commentBefore;
         valueComment = value.comment;
     }
-    else if (value && typeof value === 'object') {
-        value = doc.createNode(value);
+    else {
+        vsb = false;
+        vcb = null;
+        valueComment = null;
+        if (value && typeof value === 'object')
+            value = doc.createNode(value);
     }
     ctx.implicitKey = false;
     if (!explicitKey && !keyComment && Node.isScalar(value))
@@ -15895,24 +16032,50 @@ function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
         !value.tag &&
         !value.anchor) {
         // If indentSeq === false, consider '- ' as part of indentation where possible
-        ctx.indent = ctx.indent.substr(2);
+        ctx.indent = ctx.indent.substring(2);
     }
     let valueCommentDone = false;
     const valueStr = stringify.stringify(value, ctx, () => (valueCommentDone = true), () => (chompKeep = true));
     let ws = ' ';
-    if (vcb || keyComment) {
-        if (valueStr === '' && !ctx.inFlow)
-            ws = vcb === '\n' ? '\n\n' : vcb;
-        else
-            ws = `${vcb}\n${ctx.indent}`;
+    if (keyComment || vsb || vcb) {
+        ws = vsb ? '\n' : '';
+        if (vcb) {
+            const cs = commentString(vcb);
+            ws += `\n${stringifyComment.indentComment(cs, ctx.indent)}`;
+        }
+        if (valueStr === '' && !ctx.inFlow) {
+            if (ws === '\n')
+                ws = '\n\n';
+        }
+        else {
+            ws += `\n${ctx.indent}`;
+        }
     }
     else if (!explicitKey && Node.isCollection(value)) {
-        const flow = valueStr[0] === '[' || valueStr[0] === '{';
-        if (!flow || valueStr.includes('\n'))
-            ws = `\n${ctx.indent}`;
+        const vs0 = valueStr[0];
+        const nl0 = valueStr.indexOf('\n');
+        const hasNewline = nl0 !== -1;
+        const flow = ctx.inFlow ?? value.flow ?? value.items.length === 0;
+        if (hasNewline || !flow) {
+            let hasPropsLine = false;
+            if (hasNewline && (vs0 === '&' || vs0 === '!')) {
+                let sp0 = valueStr.indexOf(' ');
+                if (vs0 === '&' &&
+                    sp0 !== -1 &&
+                    sp0 < nl0 &&
+                    valueStr[sp0 + 1] === '!') {
+                    sp0 = valueStr.indexOf(' ', sp0 + 1);
+                }
+                if (sp0 === -1 || nl0 < sp0)
+                    hasPropsLine = true;
+            }
+            if (!hasPropsLine)
+                ws = `\n${ctx.indent}`;
+        }
     }
-    else if (valueStr === '' || valueStr[0] === '\n')
+    else if (valueStr === '' || valueStr[0] === '\n') {
         ws = '';
+    }
     str += ws + valueStr;
     if (ctx.inFlow) {
         if (valueCommentDone && onComment)
@@ -15940,8 +16103,8 @@ exports.stringifyPair = stringifyPair;
 var Scalar = __nccwpck_require2_(9338);
 var foldFlowLines = __nccwpck_require2_(2889);
 
-const getFoldOptions = (ctx) => ({
-    indentAtStart: ctx.indentAtStart,
+const getFoldOptions = (ctx, isBlock) => ({
+    indentAtStart: isBlock ? ctx.indent.length : ctx.indentAtStart,
     lineWidth: ctx.options.lineWidth,
     minContentWidth: ctx.options.minContentWidth
 });
@@ -16054,7 +16217,7 @@ function doubleQuotedString(value, ctx) {
     str = start ? str + json.slice(start) : json;
     return implicitKey
         ? str
-        : foldFlowLines.foldFlowLines(str, indent, foldFlowLines.FOLD_QUOTED, getFoldOptions(ctx));
+        : foldFlowLines.foldFlowLines(str, indent, foldFlowLines.FOLD_QUOTED, getFoldOptions(ctx, false));
 }
 function singleQuotedString(value, ctx) {
     if (ctx.options.singleQuote === false ||
@@ -16066,7 +16229,7 @@ function singleQuotedString(value, ctx) {
     const res = "'" + value.replace(/'/g, "''").replace(/\n+/g, `$&\n${indent}`) + "'";
     return ctx.implicitKey
         ? res
-        : foldFlowLines.foldFlowLines(res, indent, foldFlowLines.FOLD_FLOW, getFoldOptions(ctx));
+        : foldFlowLines.foldFlowLines(res, indent, foldFlowLines.FOLD_FLOW, getFoldOptions(ctx, false));
 }
 function quotedString(value, ctx) {
     const { singleQuote } = ctx.options;
@@ -16164,12 +16327,12 @@ function blockString({ comment, type, value }, ctx, onComment, onChompKeep) {
         .replace(/(?:^|\n)([\t ].*)(?:([\n\t ]*)\n(?![\n\t ]))?/g, '$1$2') // more-indented lines aren't folded
         //                ^ more-ind. ^ empty     ^ capture next empty lines only at end of indent
         .replace(/\n+/g, `$&${indent}`);
-    const body = foldFlowLines.foldFlowLines(`${start}${value}${end}`, indent, foldFlowLines.FOLD_BLOCK, getFoldOptions(ctx));
+    const body = foldFlowLines.foldFlowLines(`${start}${value}${end}`, indent, foldFlowLines.FOLD_BLOCK, getFoldOptions(ctx, true));
     return `${header}\n${indent}${body}`;
 }
 function plainString(item, ctx, onComment, onChompKeep) {
     const { type, value } = item;
-    const { actualString, implicitKey, indent, inFlow } = ctx;
+    const { actualString, implicitKey, indent, indentStep, inFlow } = ctx;
     if ((implicitKey && /[\n[\]{},]/.test(value)) ||
         (inFlow && /[[\]{},]/.test(value))) {
         return quotedString(value, ctx);
@@ -16193,9 +16356,14 @@ function plainString(item, ctx, onComment, onChompKeep) {
         // Where allowed & type not set explicitly, prefer block style for multiline strings
         return blockString(item, ctx, onComment, onChompKeep);
     }
-    if (indent === '' && containsDocumentMarker(value)) {
-        ctx.forceBlockIndent = true;
-        return blockString(item, ctx, onComment, onChompKeep);
+    if (containsDocumentMarker(value)) {
+        if (indent === '') {
+            ctx.forceBlockIndent = true;
+            return blockString(item, ctx, onComment, onChompKeep);
+        }
+        else if (implicitKey && indent === indentStep) {
+            return quotedString(value, ctx);
+        }
     }
     const str = value.replace(/\n+/g, `$&\n${indent}`);
     // Verify that output will be parsed as a string, as e.g. plain numbers and
@@ -16209,7 +16377,7 @@ function plainString(item, ctx, onComment, onChompKeep) {
     }
     return implicitKey
         ? str
-        : foldFlowLines.foldFlowLines(str, indent, foldFlowLines.FOLD_FLOW, getFoldOptions(ctx));
+        : foldFlowLines.foldFlowLines(str, indent, foldFlowLines.FOLD_FLOW, getFoldOptions(ctx, false));
 }
 function stringifyString(item, ctx, onComment, onChompKeep) {
     const { implicitKey, inFlow } = ctx;
@@ -32574,9 +32742,11 @@ function exportEnvs(accessKeyId, accessKeySecret, securityToken) {
     core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_ID', accessKeyId);
     core.exportVariable('ALICLOUD_ACCESS_KEY', accessKeyId);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_ID', accessKeyId);
-    core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_SECRET', accessKeyId);
+    core.exportVariable('ALICLOUD_ACCESS_KEY_ID', accessKeyId);
+    core.exportVariable('ALIBABA_CLOUD_ACCESS_KEY_SECRET', accessKeySecret);
     core.exportVariable('ALICLOUD_SECRET_KEY', accessKeySecret);
     core.exportVariable('ALIBABACLOUD_ACCESS_KEY_SECRET', accessKeySecret);
+    core.exportVariable('ALICLOUD_ACCESS_KEY_SECRET', accessKeySecret);
     core.exportVariable('ALIBABA_CLOUD_SECURITY_TOKEN', securityToken);
     core.exportVariable('ALICLOUD_ACCESS_KEY_STS_TOKEN', securityToken);
     core.exportVariable('ALIBABACLOUD_SECURITY_TOKEN', securityToken);

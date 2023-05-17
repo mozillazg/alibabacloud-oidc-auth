@@ -61,15 +61,17 @@ Inputs
 * ``export-environment-variables``: (Optional) Export common environment variables, including:
 
   - ``ALIBABA_CLOUD_ACCESS_KEY_ID``
-  - ``ALIBABA_CLOUD_ACCESS_KEY_SECRET``
-  - ``ALIBABA_CLOUD_SECURITY_TOKEN``
   - ``ALICLOUD_ACCESS_KEY``
-  - ``ALICLOUD_SECRET_KEY``
-  - ``ALICLOUD_SECURITY_TOKEN``
-  - ``ALICLOUD_ACCESS_KEY_STS_TOKEN``
   - ``ALIBABACLOUD_ACCESS_KEY_ID``
+  - ``ALICLOUD_ACCESS_KEY_ID``
+  - ``ALIBABA_CLOUD_ACCESS_KEY_SECRET``
+  - ``ALICLOUD_SECRET_KEY``
   - ``ALIBABACLOUD_ACCESS_KEY_SECRET``
+  - ``ALICLOUD_ACCESS_KEY_SECRET``
+  - ``ALIBABA_CLOUD_SECURITY_TOKEN``
+  - ``ALICLOUD_ACCESS_KEY_STS_TOKEN``
   - ``ALIBABACLOUD_SECURITY_TOKEN``
+  - ``ALICLOUD_SECURITY_TOKEN``
 
   The default value is: ``false``
 * ``set-outputs``: (Optional) Setting action outputs. The default value is: ``false``
