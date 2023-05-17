@@ -31,7 +31,7 @@
     "@alicloud/openapi-client": "^0.4.4",
     "@alicloud/sts20150401": "^1.1.2",
     "@alicloud/tea-util": "^1.4.5",
-    "@google-github-actions/actions-utils": "^0.4.6"
+    "@google-github-actions/actions-utils": "^0.4.8"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.36.1",
