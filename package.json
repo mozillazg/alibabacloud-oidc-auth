@@ -34,7 +34,7 @@
     "@google-github-actions/actions-utils": "^0.4.8"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.36.1",
+    "@vercel/ncc": "^0.38.0",
     "typescript": "^5.2.2"
   }
 }
